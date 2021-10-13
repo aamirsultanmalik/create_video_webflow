@@ -312,9 +312,17 @@ function handleFiles() {
     };
   }
 }
+
+function uuid() {
+  return 'file-' + 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx.'.replace(/[xy]/g, function(c) {
+    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
+
 async function uploadImage() {
 
-  var fileName = Date.now().toString() + "T." + imageFile.name.split(".").pop();
+  var fileName = uuid() + imageFile.name.split(".").pop();
   $.ajax({
     url:
       "https://storage.googleapis.com/upload/storage/v1/b/yepicai-backend.appspot.com/o?uploadType=media&name=" +
@@ -323,7 +331,7 @@ async function uploadImage() {
     data: imageFile,
     processData: false,
     headers: {
-      "Content-Type": "image/png",
+      "Content-Type": imageFile.type,
     },
     success: function (data) {
       fV.uploadFilename = fileName;
