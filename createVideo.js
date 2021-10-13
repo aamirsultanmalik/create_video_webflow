@@ -320,18 +320,8 @@ function uuid() {
   });
 }
 
-function isValidationFileType(type) {
-  var fileTypes = ["image/tiff", "image/jfif", "image/bmp", "image/gif", "image/png", "image/svg", "image/jpeg", "image/jpg", "image/webp"]
-  if(fileTypes.indexOf(type) != -1) {
-    return true;
-  }
-  return false;
-}
-
 async function uploadImage() {
-  if(!isValidationFileType(imageFile.type)) {
-    return alert("This extention isn't supported.");
-  }
+
   var fileName = uuid() + imageFile.name.split(".").pop();
   $.ajax({
     url:
