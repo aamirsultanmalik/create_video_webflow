@@ -332,25 +332,35 @@ $("#seeMyVideoBtn").on('click', function(){
     
     }
     }
-    async function uploadImage(){
-    var fileName = (Date.now()).toString() + "T_" + imageFile.name;
-    $.ajax({
-            url :  "https://storage.googleapis.com/upload/storage/v1/b/yepicai-backend.appspot.com/o?uploadType=media&name=" + fileName,
-              type: "POST",
-              data: imageFile,
-              processData: false,
-           headers: {
-     "Content-Type": "image/png"
-    },
-              success: function(data) {
-                fV.uploadFilename = fileName;
-                fV.link = data.mediaLink;
-    
-              }, error: function() {
-                  alert("Something went wrong, try again!");
-              }
-            });
-        }
+    function uuid() {
+      return 'file-' + 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx.'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+      });
+    }
+
+    async function uploadImage() {
+
+      var fileName = uuid() + imageFile.name.split(".").pop();
+      $.ajax({
+        url:
+          "https://storage.googleapis.com/upload/storage/v1/b/yepicai-backend.appspot.com/o?uploadType=media&name=" +
+          fileName,
+        type: "POST",
+        data: imageFile,
+        processData: false,
+        headers: {
+          "Content-Type": imageFile.type,
+        },
+        success: function (data) {
+          fV.uploadFilename = fileName;
+          fV.link = data.mediaLink;
+        },
+        error: function () {
+          alert("Something went wrong, try again!");
+        },
+      });
+    }
     
     var  playerPaused = true;
     $('.form-tab-voice-wrap').on('click', '.form-voice .form-voice-sample', function() {
