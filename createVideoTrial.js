@@ -10,7 +10,7 @@ console.log(member)
 if (member.loggedIn &&  member.membership.id != "6137a90f266a3f0004c23349" ) {
 window.location.replace("https://yepic.ai/createvideo-trialuser")
 }
-else if ( member.loggedIn && membership.id == "6137a90f266a3f0004c2334") {
+else if ( member.loggedIn && membership.id == "6137a90f266a3f0004c23349") {
 $("#welcomePopup").hide()
 $("#emailPopup").css('display', 'flex');
 }
