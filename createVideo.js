@@ -165,7 +165,7 @@ function send_request() {
     formErrors = true;
     $(".form-name-wrap").css(redBorderCss);
   }
-  if (fV.script.length < 3 && fV.voice != "custom") {
+  if (fV.script.length < 3 && fV.voice != "custom" && fV.audioLink != "") {
     formErrors = true;
     $("#video-script").css(redBorderCss);
   }
