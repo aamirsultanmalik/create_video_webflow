@@ -161,6 +161,8 @@ function send_request() {
   fV.script = $("#video-script").val();
   fV.videoName = $("#video-name").val();
   fV.size = $("#size").val();
+  
+  textChecking();
   if (fV.videoName.length < 1) {
     formErrors = true;
     $(".form-name-wrap").css(redBorderCss);
@@ -703,6 +705,77 @@ async function checkForAbuse() {
     success: function (approval) {
       scriptApproved = approval;
       playPreview();
+    },
+    error: function () {
+      alert("Something went wrong, try again!");
+    },
+  });
+}
+
+//Aamir Integration started
+$("#previewPlayBtn").click(function(){
+  textChecking();
+});
+async function textChecking() {
+  var text =$("#video-script").val();
+  $.ajax({
+    url:"https://moderator-2xzgrl4rma-uc.a.run.app/text",
+    type: "POST",
+    data: text,
+    processData: false,
+    headers: {
+      "Content-Type": "text/json",
+    },
+    success: function (data) {
+     if(data.sexual >= 10 && data.mature >= 10 && data.offensive >= 10){
+       alert("Abusive text detected, please check.");
+     }
+    },
+    error: function () {
+      alert("Something went wrong, try again!");
+    },
+  });
+}
+
+$("#Email-3").focusout(function(){
+  emailChecking();
+});
+
+async function emailChecking() {
+  var email =$("#video-script").val();
+  $.ajax({
+    url:"https://moderator-2xzgrl4rma-uc.a.run.app/email",
+    type: "POST",
+    data: email,
+    processData: false,
+    headers: {
+      "Content-Type": "text/json",
+    },
+    success: function (data) {
+     if(data.is_disposable_email == true){
+       alert("Please enter valid email");
+     }
+    },
+    error: function () {
+      alert("Something went wrong, try again!");
+    },
+  });
+}
+
+async function imageChecking() {
+  var email =$("#video-script").val();
+  $.ajax({
+    url:"https://moderator-2xzgrl4rma-uc.a.run.app/image",
+    type: "POST",
+    data: email,
+    processData: false,
+    headers: {
+      "Content-Type": "text/json",
+    },
+    success: function (data) {
+      if(data.adult >= 10 && data.racy >= 10 && data.average >= 10){
+        alert("Abusive text detected, please check.");
+      }
     },
     error: function () {
       alert("Something went wrong, try again!");
